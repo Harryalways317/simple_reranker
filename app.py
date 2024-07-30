@@ -118,7 +118,11 @@ class MSMacroAPI(Resource):
         zip_rel_docs.sort(key=lambda x: -1 * x[0])
 
         # Return the top 5 documents by their content
-        top_docs = [i[1] for i in zip_rel_docs[:5]]
+        # Determine the number of documents to return
+        num_docs_to_return = min(len(zip_rel_docs), 5)
+
+        # Extract the top documents by their content
+        top_docs = [zip_rel_docs[i][1] for i in range(num_docs_to_return)]
 
         # Return the top 5 documents
         return make_response(jsonify({"docs": top_docs}), 200)
